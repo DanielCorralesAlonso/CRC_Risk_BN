@@ -1,0 +1,17 @@
+Age,BMI,count
+2_young,1_underweight,297
+2_young,2_normal,25035
+2_young,3_overweight,22337
+2_young,4_obese,6818
+3_young_adult,1_underweight,176
+3_young_adult,2_normal,26917
+3_young_adult,3_overweight,40028
+3_young_adult,4_obese,15053
+4_adult,1_underweight,100
+4_adult,2_normal,14801
+4_adult,3_overweight,31705
+4_adult,4_obese,14594
+5_old_adult,1_underweight,40
+5_old_adult,2_normal,4135
+5_old_adult,3_overweight,10973
+5_old_adult,4_obese,5821
