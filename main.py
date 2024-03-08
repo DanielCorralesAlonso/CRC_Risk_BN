@@ -11,6 +11,7 @@ import config
 
 
 # ---- Read CSV --------
+
 dir = os.getcwd()
 file_path = os.path.join(dir, "data/df_2012.csv")
 
