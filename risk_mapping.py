@@ -38,17 +38,17 @@ def pointwise_risk_mapping(model_bn, var1, var2):
 
 
 
-def heatmap_plot_and_save(df, model_bn, col_var, row_var, path_to_data = "interval_df", interval = False, save = True):
+def heatmap_plot_and_save(df, model_bn, col_var, row_var, q_length = 40, n_samples = 25000, path_to_data = "interval_df", interval = False, save = True):
 
     n_colors = 256 # Use 256 colors for the diverging color palette
     palette = sns.color_palette("RdBu_r", n_colors = 256) #sns.diverging_palette(220, 20, center = "dark", n=n_colors)
 
     if interval:
-        df_hom = pd.read_csv(f"{path_to_data}/df_hom_{col_var}_{row_var}_40_25000.csv", index_col=[0])
-        df_hom_interval = pd.read_csv(f"{path_to_data}/df_hom_{col_var}_{row_var}_40_25000_interval.csv", index_col=[0])
+        df_hom = pd.read_csv(f"{path_to_data}/df_hom_{col_var}_{row_var}_{q_length}_{n_samples}.csv", index_col=[0])
+        df_hom_interval = pd.read_csv(f"{path_to_data}/df_hom_{col_var}_{row_var}_{q_length}_{n_samples}_interval.csv", index_col=[0])
 
-        df_muj = pd.read_csv(f"{path_to_data}/df_muj_{col_var}_{row_var}_40_25000.csv", index_col=[0])
-        df_muj_interval = pd.read_csv(f"{path_to_data}/df_muj_{col_var}_{row_var}_40_25000_interval.csv", index_col=[0])
+        df_muj = pd.read_csv(f"{path_to_data}/df_muj_{col_var}_{row_var}_{q_length}_{n_samples}.csv", index_col=[0])
+        df_muj_interval = pd.read_csv(f"{path_to_data}/df_muj_{col_var}_{row_var}_{q_length}_{n_samples}_interval.csv", index_col=[0])
         
     else:   
         df_hom, df_muj = pointwise_risk_mapping(model_bn, col_var, row_var)

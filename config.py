@@ -1,3 +1,9 @@
+inputs = {
+    "target": "CRC",
+    "calculate_interval": False,
+    "n_random_trials": 10,
+
+}
 
 
 structure = {

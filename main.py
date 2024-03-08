@@ -7,28 +7,23 @@ from pgmpy.models import BayesianNetwork
 from pgmpy.estimators import HillClimbSearch, BDsScore
 from pgmpy.factors.discrete import State
 
+from preprocessing import preprocessing
 import config
 
 
-# ---- Read CSV --------
-
+# ---- Read CSV and short preprocessing ---------------------------------
 dir = os.getcwd()
 file_path = os.path.join(dir, "data/df_2012.csv")
 
 df = pd.read_csv(file_path, index_col = None)
-df.drop(columns = ["Medication", "año_reco", "fpi", "Unnamed: 0"], inplace = True)
-
-try:
-    df = df[(df["Age"] != "1_very_young") & (df["Age"] != "6_elderly")].copy()
-except:
-    df = df
+df = preprocessing(df)
 
 print("Successful data read")
-# ----------------------
+# -----------------------------------------------------------------------
 
 
-# ---- Structure Learning -------------
-cancer_interes = "CRC"
+# ---- Structure Learning -----------------------------------------------
+target = config.inputs["target"]
 blck_lst = config.structure["black_list"]
 fxd_edges = config.structure["fixed_edges"]
 
@@ -37,9 +32,10 @@ from pgmpy.estimators import HillClimbSearch, BDsScore
 est = HillClimbSearch(data = df)
 model = est.estimate(scoring_method=BDsScore(df, equivalent_sample_size = 5), fixed_edges=fxd_edges, black_list=blck_lst)
 print("Successful structure learning")
+# -----------------------------------------------------------------------
 
 
-# ----- Save learned model --------
+# ----- Save learned model ----------------------------------------------
 
 if not os.path.exists("images"):
         os.mkdir("images")
@@ -64,8 +60,6 @@ gumimage.export(bn_gum, file_path, size = "20!",
                 nodeColor = config.node_color,
                             )
 
-
-
 # POSTERIOR NET
 bn_gum_2 = gum.BayesNet()
 bn_gum_2.addVariables(list(df.columns))
@@ -86,12 +80,12 @@ gumimage.export(bn_gum_2, file_path, size = "20!",
                 arcColor= arcColor_mine )
 
 print("Successful graphic models save")
+# -----------------------------------------------------------------------
 
 
-# ---- Parameter estimation ------------
+# ---- Parameter estimation ---------------------------------------------
 
 from pgmpy.models import BayesianNetwork
-# from BayesianNetwork import  BayesianNetwork
 model_bn = BayesianNetwork(model)
 
 
@@ -128,6 +122,7 @@ from parameter_estimation import prior_update_iteration
 model_infer, counts_per_year = prior_update_iteration(model_bn, card_dict, pscount_dict = pscount_dict, size_prior_dataset=size_prior_dataset)
 
 print("Successful parameter estimation")
+# ----------------------------------------------------------------------
 
 
 # ---- Save model statistics of interest (90% prediction interval) -----
@@ -141,9 +136,10 @@ mean, var = from_counts_to_mean_and_variance( counts_per_year[2012][0] )
 csv_quantiles(model_bn, counts_per_year=counts_per_year)
 
 print("Successful statistics save")
+# -----------------------------------------------------------------------
 
 
-# ---- Risk mapping ------
+# ---- Risk mapping -----------------------------------------------------
 from risk_mapping import heatmap_plot_and_save
 from prediction_interval import prediction_interval
 
@@ -152,7 +148,12 @@ row_var = config.pointwise_risk_mapping["row_var"]
 
 heatmap_plot_and_save(df, model_bn, col_var, row_var)
 
-calculate_interval = False
+
+# If calculate interval = True, an approximation of the prediction intervals will be 
+# by sampling. However, it is a task that requires relatively large computation and time 
+# resources, so we encourage to use the example case available.
+
+calculate_interval = config.inputs["calculate_interval"]
 if calculate_interval:
     prediction_interval(model_bn, col_var, row_var, path_to_data = "interval_df/")
 
@@ -163,31 +164,30 @@ heatmap_plot_and_save(df, model_bn, col_var, row_var, interval = True)
 
 print("Successful risk mapping")
 
-#-------------------------
+# -----------------------------------------------------------------------
 
 
 
-# ---- Influential variables -------
-
+# ---- Influential variables --------------------------------------------
 from influential_variables import influential_variables
 
-target = "CRC"
 df_pos = df[df[target] == True].copy()
 
-heatmap_data = influential_variables(data=df_pos, target=target, model_bn = model_bn, n_random_trials = 1)
+# Increase the n_random_trials to get meaningful results.
+heatmap_data = influential_variables(data=df_pos, target=target, model_bn = model_bn, n_random_trials = config.inputs["n_random_trials"])
 
 print("Successful influential variables")
+# -----------------------------------------------------------------------
 
 
 
-# ---- Evaluation of the model -------
-
+# ---- Evaluation of the model ------------------------------------------
 from evaluation_classification import evaluation_classification
 
 df_remaining = pd.read_csv("data/df_2016.csv")
-df_remaining.drop(columns = ["Medication", "año_reco", "fpi", "Unnamed: 0"], inplace = True)
-
+df_remaining = preprocessing(df_remaining)
 
 evaluation_classification(df_remaining, model_bn)
 
 print("Successful evaluation of the model")
+# -----------------------------------------------------------------------
