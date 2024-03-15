@@ -10,12 +10,9 @@ from pgmpy.inference import VariableElimination
 
 from query2df import query2df
 
-def evaluation_classification(df_test, model_bn):
+def evaluation_classification(df_test, model_bn, test_var = "CRC"):
 
     model_infer = VariableElimination(model_bn)
-
-    test_var = "CRC"
-
 
     g_means_iter = []
     sensitivity_iter = []
@@ -67,6 +64,9 @@ def evaluation_classification(df_test, model_bn):
 
     plt.xlim([0, max(max(prob_pred), max(prob_true))])  #CRC: 0.005, Diabetes: 0.25
     plt.ylim([0, max(max(prob_pred), max(prob_true))])
+
+    dashed =  len(df_test[df_test[test_var] == True]) / len(df_test)
+    plt.axvline(x=dashed, linestyle = '--', color='gray') 
 
     # Show the modified plot
     plt.title(f"Calibration plot for {test_var}")
