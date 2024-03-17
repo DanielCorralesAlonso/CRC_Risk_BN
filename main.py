@@ -125,7 +125,7 @@ print("Successful parameter estimation")
 # ----------------------------------------------------------------------
 
 
-# ---- Save model statistics of interest (90% prediction interval) -----
+# ---- Save model statistics of interest (90% posterior predictive interval) -----
 from table_statistics import from_counts_to_mean_and_variance, csv_quantiles
 
 if not os.path.exists("bounds"):
@@ -141,7 +141,7 @@ print("Successful statistics save")
 
 # ---- Risk mapping -----------------------------------------------------
 from risk_mapping import heatmap_plot_and_save
-from prediction_interval import prediction_interval
+from predictive_interval import predictive_interval
 
 col_var = config.pointwise_risk_mapping["col_var"]
 row_var = config.pointwise_risk_mapping["row_var"]
@@ -149,13 +149,13 @@ row_var = config.pointwise_risk_mapping["row_var"]
 heatmap_plot_and_save(df, model_bn, col_var, row_var)
 
 
-# If calculate interval = True, an approximation of the prediction intervals will be 
+# If calculate interval = True, an approximation of the posterior predictive intervals will be 
 # by sampling. However, it is a task that requires relatively large computation and time 
 # resources, so we encourage to use the example case available.
 
 calculate_interval = config.inputs["calculate_interval"]
 if calculate_interval:
-    prediction_interval(model_bn, col_var, row_var, path_to_data = "interval_df/")
+    predictive_interval(model_bn, col_var, row_var, path_to_data = "interval_df/")
 
 col_var = config.interval_risk_mapping["col_var"]
 row_var = config.interval_risk_mapping["row_var"]
