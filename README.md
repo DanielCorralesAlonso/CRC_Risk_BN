@@ -38,6 +38,23 @@ Only about 14 % of the susceptible EU citizens
   7. **Influential Variables**: It identifies the variables in the model that have the most influence on a target variable. This is done using a function from the `influential_variables` module.
   
   8. **Model Evaluation**: Finally, it evaluates the performance of the model in classifying a target variable in a separate dataset (`df_2016.csv`). This is done using a function from the `evaluation_classification` module.
+
+- **config.py**: This file contains several Python dictionaries and lists that are used to configure the behavior of a Bayesian Network model:
+
+  1. `inputs`: This dictionary specifies the target variable for the model ("CRC"), whether to calculate intervals (False), and the number of random trials to perform (10).
+  
+  2. `structure`: This dictionary contains two lists:
+     - `black_list`: A list of variable pairs that should not be connected in the Bayesian Network.
+     - `fixed_edges`: A list of variable pairs that should always be connected in the Bayesian Network.
+  
+  3. `node_color`: This dictionary assigns a weight to each variable, which could be used for visual representation or importance ranking. The weights range from 0.1 to 0.4.
+  
+  4. `pointwise_risk_mapping`: This dictionary specifies the column variable ("Age") and the row variable ("BMI") for the pointwise risk mapping.
+  
+  5. `interval_risk_mapping`: This dictionary specifies the column variable ("Age") and the row variable ("BMI") for the interval risk mapping.
+  
+  6. `interval_path`: This dictionary specifies the path ("prueba22nov/") where the interval risk mapping results will be saved.
+   
  
 - **preprocessing.py**: Add necessary preprocessing steps
  
