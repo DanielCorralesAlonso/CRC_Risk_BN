@@ -125,6 +125,21 @@ print("Successful parameter estimation")
 # ----------------------------------------------------------------------
 
 
+# ---- Save model ------------------------------------------------------
+from pgmpy.readwrite import BIFWriter, XMLBIFWriter, XBNWriter
+writer = BIFWriter(model_bn)
+writer.write_bif("saved_model/model_bn.bif")
+
+writer = XMLBIFWriter(model_bn)
+writer.write_xmlbif("saved_model/model_bn.xml")
+
+writer = XBNWriter(model_bn)
+writer.write_xbn("saved_model/model_bn.xbn")
+
+print("Successful model save")
+# -----------------------------------------------------------------------
+
+
 # ---- Save model statistics of interest (90% posterior predictive interval) -----
 from table_statistics import from_counts_to_mean_and_variance, csv_quantiles
 
