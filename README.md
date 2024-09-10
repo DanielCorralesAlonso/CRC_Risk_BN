@@ -20,6 +20,8 @@ Only about 14 % of the susceptible EU citizens
 
 [Find the paper in the following link](https://doi.org/10.1016/j.cmpb.2024.108407)
 
+![Bayesian network](./images/cancer_colorectal_learned_bds.png)
+
 ## Directory strucure
 
 ### File descriptions
