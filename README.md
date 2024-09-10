@@ -16,7 +16,9 @@ Only about 14 % of the susceptible EU citizens
  models can facilitate personalized CRC predictions which can be embedded in
  decision-support tools that facilitate screening and treatment recommendations.
  This paper develops a predictive model that aids in characterizing risk groups
- and assessing the influence of a variety of risk factors on the population.
+ and assessing the influence of a variety of risk factors on the population. 
+
+[Find the paper in the following link](https://doi.org/10.1016/j.cmpb.2024.108407)
 
 ## Directory strucure
 
