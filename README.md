@@ -20,7 +20,9 @@ Only about 14 % of the susceptible EU citizens
 
 [Find the paper in the following link](https://doi.org/10.1016/j.cmpb.2024.108407)
 
-![Bayesian network](https://github.com/DanielCorralesAlonso/CRC_Risk_BN/main/images/cancer_colorectal_learned_bds.png)
+<p align="center">
+<img src="images/cancer_colorrectal_learned_bds.png" alt="Bayesian network" width="700" />
+</p>
 
 ## Directory strucure
 
@@ -80,5 +82,9 @@ Only about 14 % of the susceptible EU citizens
 
 The functions `BayesianEstimator.py` and `BayesianNetwork.py` are modified versions of the original functions from `pgmpy` which would need to be replaced in this library for the main code to run properly. The reason behind this is to save the unnormalized tables of counts and used them to calculate the mean and variance of the empirical distributions.
 
+<p align="center">
+<img src="images/point_risk_map_men_Age_BMI.png" alt="Bayesian network" width="700" />
+</p>
+
 ## Contact
-For any further consultation please contact _danielcorralesalonso@gmail.com_ 
+For any further consultation please contact _danielcorralesalonso@gmail.com_ or _daniel.corrales@icmat.es_
