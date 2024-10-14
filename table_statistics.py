@@ -62,6 +62,6 @@ def csv_quantiles(model_bn, counts_per_year):
 
             for row in range(df_95.shape[0]):
                 for column in range(df_95.shape[1]):
-                    df_range[column][row] = f"[{np.round(df_05[column][row],5)}, {np.round(df_95[column][row],5)}]"
+                    df_range.loc[row, column] = f"[{np.round(df_05[column][row],5)}, {np.round(df_95[column][row],5)}]"
 
             df_range.to_csv(f"bounds/{node}_{year}_range.csv")

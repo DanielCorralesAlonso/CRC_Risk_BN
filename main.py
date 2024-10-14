@@ -133,8 +133,8 @@ writer.write_bif("saved_model/model_bn.bif")
 writer = XMLBIFWriter(model_bn)
 writer.write_xmlbif("saved_model/model_bn.xml")
 
-writer = XBNWriter(model_bn)
-writer.write_xbn("saved_model/model_bn.xbn")
+'''writer = XBNWriter(model_bn)
+writer.write_xbn("saved_model/model_bn.xbn")'''
 
 print("Successful model save")
 # -----------------------------------------------------------------------
@@ -175,9 +175,13 @@ if calculate_interval:
 col_var = config.interval_risk_mapping["col_var"]
 row_var = config.interval_risk_mapping["row_var"]
 
-heatmap_plot_and_save(df, model_bn, col_var, row_var, interval = True)
+try:    
+    heatmap_plot_and_save(df, model_bn, col_var, row_var, interval = True, diff_gender=True)
+    print("Successful interval risk mapping")
+except:
+    heatmap_plot_and_save(df, model_bn, col_var, row_var, interval = False, diff_gender=False)
+    print("Successful pointwise risk mapping")
 
-print("Successful risk mapping")
 
 # -----------------------------------------------------------------------
 
@@ -199,10 +203,13 @@ print("Successful influential variables")
 # ---- Evaluation of the model ------------------------------------------
 from evaluation_classification import evaluation_classification
 
-df_remaining = pd.read_csv("data/df_2016.csv")
-df_remaining = preprocessing(df_remaining)
+if config.inputs["classification"]:
+    print("The model will be now evaluated in terms of classification")
 
-evaluation_classification(df_remaining, model_bn)
+    df_remaining = pd.read_csv("data/df_2016.csv")
+    df_remaining = preprocessing(df_remaining)
 
-print("Successful evaluation of the model")
+    evaluation_classification(df_remaining, model_bn)
+
+    print("Successful evaluation of the model")
 # -----------------------------------------------------------------------

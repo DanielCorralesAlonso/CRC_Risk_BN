@@ -2,6 +2,7 @@ inputs = {
     "target": "CRC",
     "calculate_interval": False,
     "n_random_trials": 10,
+    "classification": False,
 
 }
 
@@ -113,12 +114,12 @@ node_color = {'Age': 0.3,
 
 pointwise_risk_mapping = {
     "col_var": "Age",
-    "row_var": "BMI"
+    "row_var": "PA"
 }
 
 interval_risk_mapping = {
     "col_var": "Age",
-    "row_var": "BMI"
+    "row_var": "PA"
 }
 
 interval_path = {'path': "prueba22nov/"}

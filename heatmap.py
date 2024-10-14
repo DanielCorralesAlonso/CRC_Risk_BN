@@ -3,7 +3,7 @@ import pandas as pd
 import seaborn as sns
 import numpy as np
 
-def heatmap(x, y, text, title = None, **kwargs):
+def heatmap(x, y, text, interval, title = None, **kwargs):
     plt.style.use("_classic_test_patch")
     fig = plt.figure(figsize=(len(set(x))*2,len(set(y))*2))
 
@@ -93,16 +93,22 @@ def heatmap(x, y, text, title = None, **kwargs):
     
 
     threshold = 0.5
-    if text is not None:
-        for i, txt in enumerate(text):
-            '''print(txt)
-            print(type(txt))'''
-            if int(np.linalg.norm(c[i]) < threshold) and (int(s[i]) > 5000): 
-                ax.annotate(f"{txt}", (x_i[i], y_i[i]), xytext = (x_i[i], y_i[i] - 0.4), ha = 'center', color = "white")
-                ax.annotate(f"{color[i]}", (x_i[i], y_i[i]), xytext = (x_i[i], y_i[i] + 0.35), ha = 'center', color = "white")
-            else:
-                ax.annotate(f"{color[i]}$\in${txt}", (x_i[i], y_i[i]), xytext = (x_i[i], y_i[i] - 0.4), ha = 'center', color = "black", fontsize = 8.5)
-                # ax.annotate(f"{color[i]}", (x_i[i], y_i[i]), xytext = (x_i[i], y_i[i] - 0.3), ha = 'center', color = "black")
+
+    if interval:
+        if text is not None:
+            for i, txt in enumerate(text):
+                '''print(txt)
+                print(type(txt))'''
+                if int(np.linalg.norm(c[i]) < threshold) and (int(s[i]) > 5000): 
+                    ax.annotate(f"{txt}", (x_i[i], y_i[i]), xytext = (x_i[i], y_i[i] - 0.4), ha = 'center', color = "white")
+                    ax.annotate(f"{color[i]}", (x_i[i], y_i[i]), xytext = (x_i[i], y_i[i] + 0.35), ha = 'center', color = "white")
+                else:
+                    ax.annotate(f"{color[i]}$\in${txt}", (x_i[i], y_i[i]), xytext = (x_i[i], y_i[i] - 0.4), ha = 'center', color = "black", fontsize = 8.5)
+                    # ax.annotate(f"{color[i]}", (x_i[i], y_i[i]), xytext = (x_i[i], y_i[i] - 0.3), ha = 'center', color = "black")
+    else:
+        if text is not None:
+            for i, txt in enumerate(text):
+                ax.annotate(f"{color[i]}", (x_i[i], y_i[i]), xytext = (x_i[i], y_i[i] - 0.4), ha = 'center', color = "black", fontsize = 8.5)
 
     
 
